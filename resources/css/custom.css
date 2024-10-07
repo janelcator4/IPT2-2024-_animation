@@ -1,0 +1,131 @@
+html, body {
+    height: 100%;
+}
+
+.hero {
+    background: url('/fsuu2.png') no-repeat center center; /* Correct path to the image */
+    background-size: cover;
+    height: 80vh; /* Adjust the height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+.hero-content {
+    z-index: 1; /* Ensure content is above the background */
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Optional: Dark overlay for better text visibility */
+    z-index: 0; /* Overlay should be below the content */
+}
+
+.text-white {
+    color: white;
+}
+
+footer {
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+.navbar-nav .nav-item .btn {
+    min-width: 100px; /* Set a minimum width for buttons */
+    padding: 0.5rem 1rem; /* Adjust padding if needed */
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem; /* Adjust padding for better spacing */
+}
+
+.btn {
+    min-width: 80px; /* Ensure buttons have a minimum width */
+}
+
+.navbar {
+    padding: 1rem;
+    
+}
+.nav-link{
+    color: white;
+}
+.nav-link:active {
+    color: #ffc107;
+}
+
+.nav-link {
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #ffc107; /* Change color on hover */
+}
+.nav-item{
+    padding-left: 1rem; /* Adjust as needed */
+    padding-right: 1rem; /* Adjust as needed */
+}
+
+
+/* Logout button styling */
+/* Logout button styling */
+.logout-button {
+    background: transparent; /* Keep the default background transparent */
+    border: none; /* Remove the border */
+    color: #000000; /* Default text color */
+    padding: 0.5rem; /* Add vertical padding */
+    width: calc(100% - 20px); /* Set width to 100% minus margins */
+    margin: 0 10px; /* Add horizontal margins */
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    border-radius: 0.25rem; /* Add rounded corners */
+}
+
+.logout-button:hover {
+    background-color: rgb(214, 53, 53); /* Change background color to red on hover */
+    cursor: pointer; /* Change cursor to pointer */
+    color: white;
+}
+.input-group {
+    position: relative;
+}
+
+.input-group .input-group-text {
+    background: transparent; /* Makes the icon background transparent */
+    border: none; /* Removes the border of the icon */
+    padding: 0; /* Removes padding for a tighter fit */
+}
+
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.dashboard-sidebar {
+    width: 250px; /* Fixed width for the sidebar */
+}
+
+.dashboard-content {
+    flex-grow: 1; /* Allow the content to take remaining space */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Optional styling for the navbar */
+.navbar {
+    z-index: 10; /* Ensure the navbar is on top */
+}
+
+
+
+
+
+
+
+
+
