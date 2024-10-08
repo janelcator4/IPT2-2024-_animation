@@ -9937,11 +9937,8 @@ function Login() {
       return _ref.apply(this, arguments);
     };
   }();
-
-  // Cleanup function to avoid memory leak warning
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     return function () {
-      // Optionally reset any state variables if needed
       setError("");
       setLoading(false);
     };

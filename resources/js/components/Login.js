@@ -83,10 +83,10 @@ export default function Login() {
         }
     };
 
-    // Cleanup function to avoid memory leak warning
+    
     useEffect(() => {
         return () => {
-            // Optionally reset any state variables if needed
+            
             setError("");
             setLoading(false);
         };
