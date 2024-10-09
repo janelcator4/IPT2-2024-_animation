@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "./UserContext"; 
+import { useUser } from "./UserContext";
 import DashboardSide from "./DashboardSide";
 import DashboardNav from "./DashboardNav";
 
@@ -11,30 +11,53 @@ export default function UserList() {
 
     // Fetch all users from the database
     useEffect(() => {
+        let isMounted = true; // Variable to check if component is mounted
+
         const fetchUsers = async () => {
             try {
-                const response = await fetch("http://localhost:8000/api/users");
+                // First, get the CSRF token (if necessary)
+                await fetch("http://localhost:8000/sanctum/csrf-cookie", {
+                    method: 'GET',
+                    credentials: 'include', // Required to include cookies
+                });
+
+                const response = await fetch("http://localhost:8000/api/users", {
+                    method: 'GET',
+                    credentials: 'include', // Include credentials for authentication
+                });
     
                 if (!response.ok) {
-                    throw new Error("Failed to fetch users");
+                    if (response.status === 403) {
+                        throw new Error("Access denied. You do not have permission to view this resource.");
+                    } else {
+                        throw new Error("Failed to fetch users. Status: " + response.status);
+                    }
                 }
     
                 const result = await response.json();
     
                 // Check for 'success' flag
-                if (result.success) {
+                if (result.success && isMounted) {
                     setUsers(result.data); // Set users if the response is successful
-                } else {
+                } else if (isMounted) {
                     throw new Error("Invalid response from server");
                 }
             } catch (err) {
-                setError(err.message); // Set error state
+                if (isMounted) {
+                    setError(err.message); // Set error state
+                }
             } finally {
-                setLoading(false); // Set loading to false
+                if (isMounted) {
+                    setLoading(false); // Set loading to false
+                }
             }
         };
     
         fetchUsers();
+
+        return () => {
+            isMounted = false; // Cleanup function to mark the component as unmounted
+        };
     }, []);
     
 

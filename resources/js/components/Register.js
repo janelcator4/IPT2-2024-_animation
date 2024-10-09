@@ -2,29 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import { useUser } from "./UserContext"; // Import your UserContext
 
 export default function Register() {
+    const { setUser } = useUser(); // Get setUser from context
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [showPassword, setShowPassword] = useState(false); // State for showing password
-    const [successMessage, setSuccessMessage] = useState(""); // State for success message
-    const [loading, setLoading] = useState(false); // State for loading
+    const [showPassword, setShowPassword] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    let isMounted = true; // Flag to track if the component is mounted
+    let isMounted = true;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        setSuccessMessage(""); // Reset success message on new submission
-        setLoading(true); // Set loading to true when the request starts
+        setSuccessMessage("");
+        setLoading(true);
 
         // Basic validation
         if (password !== confirmPassword) {
             setError("Passwords do not match");
-            setLoading(false); // Reset loading on error
+            setLoading(false);
             return;
         }
 
@@ -38,28 +40,38 @@ export default function Register() {
 
             // Store token and user info in localStorage
             localStorage.setItem("token", response.data.token);
-            localStorage.setItem("user", JSON.stringify(response.data.user));
+            const user = response.data.user; // Get user data from response
+            localStorage.setItem("user", JSON.stringify(user));
 
-            // Set success message and redirect immediately
-            if (isMounted) { // Check if the component is still mounted
+            // Set user in context
+            setUser(user); // Update context with the new user
+
+            // Set success message and navigate based on user role
+            if (isMounted) {
                 setSuccessMessage("Registration successful!");
-                navigate("/login"); // Redirect to login page immediately
+
+                // Check user role and navigate accordingly
+                if (user.role === 'admin') {
+                    navigate("/admindashboard");
+                } else {
+                    navigate("/dashboard");
+                }
             }
 
         } catch (error) {
-            console.error(error); // Log error for debugging
+            console.error(error);
             if (error.response && error.response.data.message) {
-                if (isMounted) { // Check if the component is still mounted
+                if (isMounted) {
                     setError(error.response.data.message);
                 }
             } else {
-                if (isMounted) { // Check if the component is still mounted
+                if (isMounted) {
                     setError("An error occurred during registration");
                 }
             }
         } finally {
-            if (isMounted) { // Check if the component is still mounted
-                setLoading(false); // Reset loading state after request completes
+            if (isMounted) {
+                setLoading(false);
             }
         }
     };
@@ -67,7 +79,7 @@ export default function Register() {
     // Cleanup effect
     useEffect(() => {
         return () => {
-            isMounted = false; // Set flag to false when the component unmounts
+            isMounted = false;
         };
     }, []);
 

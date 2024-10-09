@@ -46,6 +46,10 @@ export default function Login() {
                 // Set user in context
                 setUser(response.data.user);
 
+                // Store the token in localStorage and set it for future requests
+                localStorage.setItem("token", response.data.access_token);
+                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+
                 // Handle Remember Me functionality
                 if (rememberMe) {
                     localStorage.setItem("rememberedEmail", email);
@@ -57,11 +61,13 @@ export default function Login() {
                 setEmail("");
                 setPassword("");
 
-                // Redirect based on user role
+                // Redirect based on user role with fallback route
                 if (response.data.user.role === "admin") {
                     navigate("/admindashboard"); // Admin dashboard
-                } else {
+                } else if (response.data.user.role === "user") {
                     navigate("/dashboard"); // Regular user dashboard
+                } else {
+                    navigate("/"); // Fallback route
                 }
             } else {
                 setError("Unexpected response from server.");
@@ -83,10 +89,9 @@ export default function Login() {
         }
     };
 
-    
+    // Clean up on component unmount
     useEffect(() => {
         return () => {
-            
             setError("");
             setLoading(false);
         };
@@ -123,6 +128,7 @@ export default function Login() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
+                            disabled={loading} // Disable while loading
                         />
                     </div>
 
@@ -137,6 +143,7 @@ export default function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
+                            disabled={loading} // Disable while loading
                         />
                         <span
                             className="position-absolute"
@@ -161,6 +168,7 @@ export default function Login() {
                             id="rememberMe"
                             checked={rememberMe}
                             onChange={() => setRememberMe(!rememberMe)}
+                            disabled={loading} // Disable while loading
                         />
                         <label
                             className="form-check-label"
@@ -173,7 +181,7 @@ export default function Login() {
                     <button
                         type="submit"
                         className="btn btn-primary w-100"
-                        disabled={loading}
+                        disabled={loading} // Disable button while loading
                     >
                         {loading ? (
                             <span>

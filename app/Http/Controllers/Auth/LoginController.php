@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -26,16 +28,46 @@ class LoginController extends Controller
         // Get the authenticated user
         $user = Auth::user();
 
-        // Create a token for the user
-        $token = $user->createToken('auth_token')->plainTextToken;
+        // Define abilities based on user role
+        $abilities = $user->role === 'admin' ? ['view-dashboard', 'manage-users'] : ['view-dashboard'];
+
+        // Create a token for the user with a descriptive name and abilities
+        $token = $user->createToken($user->name . "'s Token", $abilities)->plainTextToken;
+
+        // Get the newly created token to update last_used_at
+        $tokenId = explode('|', $token)[0]; 
+        $personalToken = PersonalAccessToken::find($tokenId);
+
+        if ($personalToken) {
+            $personalToken->last_used_at = now(); 
+            $personalToken->save();
+        }
+
+        // Format the last used time
+        $formattedLastUsedAt = $personalToken && $personalToken->last_used_at
+            ? Carbon::parse($personalToken->last_used_at)->format('g:i A') 
+            : null;
+
+        // Format created_at and updated_at for user
+        $formattedCreatedAt = Carbon::parse($user->created_at)->format('g:i A');
+        $formattedUpdatedAt = Carbon::parse($user->updated_at)->format('g:i A');
 
         // Return the token and user details
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'user' => $user,
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'abilities' => $abilities,
+                'created_at' => $formattedCreatedAt, // Include formatted created_at
+                'updated_at' => $formattedUpdatedAt, // Include formatted updated_at
+                'last_used_at' => $formattedLastUsedAt, // Include formatted last_used_at
+            ],
+            'message' => 'Login successful'
         ]);
     }
 }
-
 

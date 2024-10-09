@@ -19,7 +19,7 @@ export default function DashboardSide() {
             }}
         >
             {/* Title at the top of the sidebar */}
-            <h4 className="text-center mt-4 mb-4">
+            <h4 className="text-center fw-bold mt-4 mb-4">
                 {user?.role === 'admin' ? 'Admin Dashboard' : 'Student Dashboard'}
             </h4> {/* Conditionally render the title based on user role */}
 
@@ -30,11 +30,11 @@ export default function DashboardSide() {
                     <>
                         <li className="nav-item">
                             <NavLink 
-                                className={`nav-link d-flex align-items-center ${location.pathname === '/dashboard' ? 'active' : ''}`} 
+                                className={`nav-link d-flex align-items-center ${location.pathname === '/admindashboard' ? 'active' : ''}`} 
                                 to="/dashboard" 
                                 style={{ justifyContent: 'start' }}
                             >
-                                <FontAwesomeIcon icon={faUser} className="me-2" /> Dashboard
+                                <FontAwesomeIcon icon={faUser} className="fw-bold me-2" /> Dashboard
                             </NavLink>
                         </li>
                         <li className="nav-item">

@@ -13,6 +13,9 @@ class UserController extends Controller
     public function index()
     {
         try {
+            
+            $user = auth()->user();
+            \Log::info('Authenticated User:', ['user' => $user]);
             // Fetch all users with specific fields
             $users = User::select('id', 'name', 'email', 'role', 'created_at', 'updated_at')->get();
 
@@ -22,12 +25,15 @@ class UserController extends Controller
                 'data' => $users,
             ], 200);
         } catch (\Exception $e) {
+            \Log::error('Failed to fetch users: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch users',
+                'message' => 'Failed to fetch users: ' . $e->getMessage(),
             ], 500);
         }
     }
+
+
 
     // Fetch a single user by ID
     public function show($id)

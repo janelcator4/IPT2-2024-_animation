@@ -28,8 +28,8 @@ html, body {
     z-index: 0; /* Overlay should be below the content */
 }
 
-.text-white {
-    color: white;
+.name{
+    color: #000000;
 }
 
 footer {
@@ -87,7 +87,7 @@ footer {
 }
 
 .logout-button:hover {
-    background-color: rgb(214, 53, 53); /* Change background color to red on hover */
+    background-color: rgb(99, 99, 99); 
     cursor: pointer; /* Change cursor to pointer */
     color: white;
 }
