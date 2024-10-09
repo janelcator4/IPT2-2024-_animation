@@ -9099,7 +9099,7 @@ var EnlistmentForm = function EnlistmentForm(_ref) {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
             className: "flex-grow-1",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
-              className: "container card shadow card-margin",
+              className: "container card shadow p-4",
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("h5", {
                 className: "card-title h2 mb-4 mt-4 text-center",
                 children: "Enlistment Form"
@@ -9389,7 +9389,7 @@ var EnlistmentForm = function EnlistmentForm(_ref) {
                   })]
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("button", {
                   type: "submit",
-                  className: "btn btn-primary mt-3",
+                  className: "btn btn-primary ",
                   children: "Submit"
                 })]
               })]

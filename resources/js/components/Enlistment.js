@@ -63,7 +63,7 @@ const EnlistmentForm = ({ user }) => {
                 <div className="container p-4">
                     <div className="enlistment">
                         <div className="flex-grow-1">
-                            <div className="container card shadow card-margin">
+                            <div className="container card shadow p-4">
                                 <h5 className="card-title h2 mb-4 mt-4 text-center">
                                     Enlistment Form
                                 </h5>
@@ -397,7 +397,7 @@ const EnlistmentForm = ({ user }) => {
 
                                     <button
                                         type="submit"
-                                        className="btn btn-primary mt-3"
+                                        className="btn btn-primary "
                                     >
                                         Submit
                                     </button>
