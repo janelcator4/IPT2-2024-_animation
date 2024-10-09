@@ -24,6 +24,10 @@ export default function UserList() {
                 const response = await fetch("http://localhost:8000/api/users", {
                     method: 'GET',
                     credentials: 'include', // Include credentials for authentication
+                    headers: {
+                        'Accept': 'application/json', // Set Accept header
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Add Bearer token for authentication
+                    },
                 });
     
                 if (!response.ok) {
@@ -59,7 +63,6 @@ export default function UserList() {
             isMounted = false; // Cleanup function to mark the component as unmounted
         };
     }, []);
-    
 
     return (
         <div className="d-flex" style={{ height: "100vh" }}>

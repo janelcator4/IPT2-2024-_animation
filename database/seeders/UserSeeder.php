@@ -15,16 +15,15 @@ class UserSeeder extends Seeder
             'name' => 'admin', // Admin name
             'email' => 'admin@gmail.com', // Admin email
             'password' => Hash::make('admin123'), // Hashed password
-            'role' => 'admin' // Set role as admin
+            'role' => 1 // Set role as admin (1)
         ]);
 
         // Optionally, add a regular user
-       // DB::table('users')->insert([
-            //'name' => 'Regular User', // Regular user's name
-            //'email' => 'user@example.com', // Regular user email
-            //'password' => Hash::make('user123'), // Hashed password
-            //'role' => 'user' // Set role as user
-        //])
+        DB::table('users')->insert([
+            'name' => 'Regular User', // Regular user's name
+            'email' => 'user@example.com', // Regular user email
+            'password' => Hash::make('user123'), // Hashed password
+            'role' => 0 // Set role as user (0)
+        ]);
     }
 }
-

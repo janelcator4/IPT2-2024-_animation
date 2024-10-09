@@ -16,11 +16,11 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!auth()->user() || auth()->user()->role !== 'admin') {
+        // Check if the user is authenticated and their role is '1' for admin
+        if (!auth()->user() || auth()->user()->role !== 1) {
             return response()->json(['message' => 'Forbidden'], 403);
         }
 
         return $next($request);
     }
-
 }

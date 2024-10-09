@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "./Navbar";
-import { useUser } from "./UserContext"; // Importing UserContext
+import HomeNavbar from "./HomeNavbar";
+import { useUser } from "./UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
-    const { setUser } = useUser(); // Use context to set user
+    const { setUser } = useUser();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -16,13 +16,26 @@ export default function Login() {
     const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
-    // Load email from localStorage if "Remember Me" was checked
+    let isMounted = true; // Declare this at the top of the component
+
     useEffect(() => {
         const savedEmail = localStorage.getItem("rememberedEmail");
         if (savedEmail) {
             setEmail(savedEmail);
             setRememberMe(true);
         }
+
+        // Setup CSRF token for axios requests
+        const getCsrfToken = async () => {
+            await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+        };
+
+        getCsrfToken();
+
+        return () => {
+            // Cleanup function to mark as unmounted
+            isMounted = false;
+        };
     }, []);
 
     const handleSubmit = async (e) => {
@@ -30,7 +43,6 @@ export default function Login() {
         setError("");
         setLoading(true);
 
-        // Basic form validation
         if (!email || !password) {
             setError("Both email and password are required.");
             setLoading(false);
@@ -42,64 +54,60 @@ export default function Login() {
                 "http://127.0.0.1:8000/api/login",
                 { email, password }
             );
-            if (response.data.access_token && response.data.user) {
-                // Set user in context
+
+            if (isMounted && response.data.access_token && response.data.user) {
                 setUser(response.data.user);
-
-                // Store the token in localStorage and set it for future requests
                 localStorage.setItem("token", response.data.access_token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Bearer ${response.data.access_token}`;
 
-                // Handle Remember Me functionality
                 if (rememberMe) {
                     localStorage.setItem("rememberedEmail", email);
                 } else {
                     localStorage.removeItem("rememberedEmail");
                 }
 
-                // Clear form fields
                 setEmail("");
                 setPassword("");
 
-                // Redirect based on user role with fallback route
-                if (response.data.user.role === "admin") {
-                    navigate("/admindashboard"); // Admin dashboard
-                } else if (response.data.user.role === "user") {
-                    navigate("/dashboard"); // Regular user dashboard
+                // Check user role: 1 = admin, 0 = regular user
+                if (response.data.user.role === 1) {
+                    navigate("/admindashboard");
+                } else if (response.data.user.role === 0) {
+                    navigate("/studentprofile");
                 } else {
-                    navigate("/"); // Fallback route
+                    setError("Unauthorized role.");
                 }
             } else {
                 setError("Unexpected response from server.");
             }
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 401) {
-                    setError("Incorrect email or password. Please try again.");
-                } else if (error.response.status === 422) {
-                    setError("Validation failed. Please check your input.");
+            if (isMounted) {
+                if (error.response) {
+                    if (error.response.status === 401) {
+                        setError(
+                            "Incorrect email or password. Please try again."
+                        );
+                    } else if (error.response.status === 422) {
+                        setError("Validation failed. Please check your input.");
+                    } else {
+                        setError("Server error. Please try again later.");
+                    }
                 } else {
-                    setError("Server error. Please try again later.");
+                    setError("Network error. Please check your connection.");
                 }
-            } else {
-                setError("Network error. Please check your connection.");
             }
         } finally {
-            setLoading(false);
+            if (isMounted) {
+                setLoading(false);
+            }
         }
     };
 
-    // Clean up on component unmount
-    useEffect(() => {
-        return () => {
-            setError("");
-            setLoading(false);
-        };
-    }, []);
-
     return (
         <div>
-            <Navbar />
+            <HomeNavbar />
             <div
                 className="container-lg mt-5 shadow p-4 card"
                 style={{ maxWidth: "400px", width: "100%" }}
@@ -128,7 +136,7 @@ export default function Login() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            disabled={loading} // Disable while loading
+                            disabled={loading}
                         />
                     </div>
 
@@ -143,7 +151,7 @@ export default function Login() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            disabled={loading} // Disable while loading
+                            disabled={loading}
                         />
                         <span
                             className="position-absolute"
@@ -168,7 +176,7 @@ export default function Login() {
                             id="rememberMe"
                             checked={rememberMe}
                             onChange={() => setRememberMe(!rememberMe)}
-                            disabled={loading} // Disable while loading
+                            disabled={loading}
                         />
                         <label
                             className="form-check-label"
@@ -181,7 +189,7 @@ export default function Login() {
                     <button
                         type="submit"
                         className="btn btn-primary w-100"
-                        disabled={loading} // Disable button while loading
+                        disabled={loading}
                     >
                         {loading ? (
                             <span>

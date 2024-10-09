@@ -68,10 +68,13 @@ footer {
     color: #ffc107; /* Change color on hover */
 }
 .nav-item{
-    padding-left: 1rem; /* Adjust as needed */
+    
+    padding-right: .5rem; /* Adjust as needed */
+}
+.side{
+    padding-left: 1rem;
     padding-right: 1rem; /* Adjust as needed */
 }
-
 
 /* Logout button styling */
 /* Logout button styling */

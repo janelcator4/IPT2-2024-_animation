@@ -1,30 +1,33 @@
-// resources/js/components/Navbar.js
+// HomeNavbar.js
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Navbar() {
+export default function HomeNavbar() {
     return (
         <>
-            
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark d-none d-lg-block">
                 <div className="container-fluid">
                     <Link className="navbar-brand fw-bold" to="/">
                         FSUU
                     </Link>
                     <div className="collapse navbar-collapse">
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0"> {/* ms-auto aligns the nav items to the right */}
+                        <ul className="navbar-nav ms-auto  ">
                             <li className="nav-item">
                                 <Link className="nav-link" to="/">
                                     Home
                                 </Link>
                             </li>
-                            
-                            
+                            <li className="nav-item">
+                                <Link className="btn btn-primary me-2" to="/login">
+                                    Login
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="btn btn-outline-light" to="/register">
+                                    Register
+                                </Link>
+                            </li>
                         </ul>
-                        <div>
-                            <Link className="btn btn-primary me-2" to="/login">Login</Link>
-                            <Link className="btn btn-outline-light" to="/register">Register</Link>
-                        </div>
                     </div>
                 </div>
             </nav>
@@ -33,14 +36,14 @@ export default function Navbar() {
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">
-                        Animation
+                        FSUU
                     </Link>
                     <button
                         className="navbar-toggler"
                         type="button"
                         data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar"
-                        aria-controls="offcanvasNavbar"
+                        data-bs-target="#offcanvasHomeNavbar"
+                        aria-controls="offcanvasHomeNavbar"
                         aria-expanded="false"
                         aria-label="Toggle navigation"
                     >
@@ -52,11 +55,11 @@ export default function Navbar() {
             <div
                 className="offcanvas offcanvas-end text-bg-dark"
                 tabIndex="-1"
-                id="offcanvasNavbar"
-                aria-labelledby="offcanvasNavbarLabel"
+                id="offcanvasHomeNavbar"
+                aria-labelledby="offcanvasHomeNavbarLabel"
             >
                 <div className="offcanvas-header">
-                    <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Animation</h5>
+                    <h5 className="offcanvas-title" id="offcanvasHomeNavbarLabel">FSUU</h5>
                     <button
                         type="button"
                         className="btn-close btn-close-white"
@@ -71,15 +74,13 @@ export default function Navbar() {
                                 Home
                             </Link>
                         </li>
-                        
-                        
                         <li className="nav-item">
-                            <Link className="btn btn-primary w-100 mb-2" to="/login" role="button">
+                            <Link className="btn btn-primary w-100 mb-2" to="/login">
                                 Login
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="btn btn-outline-light w-100" to="/register" role="button">
+                            <Link className="btn btn-outline-light w-100" to="/register">
                                 Register
                             </Link>
                         </li>

@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
-import Dashboard from "./Dashboard"; 
 import Schedule from "./Schedule";
 import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "./AdminDashboard"; 
 import Enlistment from "./Enlistment"; 
 import UserList from "./UserList"; 
+import StudentProfile from "./StudentProfile"; // Import the StudentProfile component
 import { UserProvider } from "./UserContext";
 
 export default function Routers() {
@@ -22,40 +22,41 @@ export default function Routers() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    {/* Accessible to all logged-in users */}
-                    <Route 
-                        path="/dashboard" 
-                        element={
-                            <PrivateRoute role="user">
-                                <Dashboard />
-                            </PrivateRoute>
-                        } 
-                    />
-
+                    {/* Accessible to all logged-in users (role 0) */}
                     <Route 
                         path="/schedule" 
                         element={
-                            <PrivateRoute role="user">
+                            <PrivateRoute requiredRole={0}>
                                 <Schedule />
                             </PrivateRoute>
                         } 
                     />
 
-                    {/* Enlistment is accessible only to regular users */}
+                    {/* Enlistment is accessible only to regular users (role 0) */}
                     <Route 
                         path="/enlistment" 
                         element={
-                            <PrivateRoute role="user"> 
+                            <PrivateRoute requiredRole={0}> 
                                 <Enlistment />
                             </PrivateRoute>
                         } 
                     />
 
-                    {/* Admin-only routes */}
+                    {/* Student Profile Route */}
+                    <Route 
+                        path="/studentprofile" 
+                        element={
+                            <PrivateRoute requiredRole={0}>
+                                <StudentProfile />
+                            </PrivateRoute>
+                        } 
+                    />
+
+                    {/* Admin-only routes (role 1) */}
                     <Route 
                         path="/admindashboard" 
                         element={
-                            <PrivateRoute role="admin">
+                            <PrivateRoute requiredRole={1}>
                                 <AdminDashboard />
                             </PrivateRoute>
                         } 
@@ -64,11 +65,13 @@ export default function Routers() {
                     <Route 
                         path="/userlist" 
                         element={
-                            <PrivateRoute role="admin">
+                            <PrivateRoute requiredRole={1}>
                                 <UserList />
                             </PrivateRoute>
                         } 
                     />
+
+                    
                 </Routes>
             </Router>
         </UserProvider>

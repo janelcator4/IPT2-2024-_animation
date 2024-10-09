@@ -29,12 +29,13 @@ class LoginController extends Controller
         $user = Auth::user();
 
         // Define abilities based on user role
-        $abilities = $user->role === 'admin' ? ['view-dashboard', 'manage-users'] : ['view-dashboard'];
+        $abilities = $user->role === 1 ? ['view-dashboard', 'manage-users'] : ['view-dashboard'];
 
         // Create a token for the user with a descriptive name and abilities
         $token = $user->createToken($user->name . "'s Token", $abilities)->plainTextToken;
 
-        // Get the newly created token to update last_used_at
+        // Optional: If you want to update the last used time for the token
+        // You can skip this part if you don't need to track when tokens were last used
         $tokenId = explode('|', $token)[0]; 
         $personalToken = PersonalAccessToken::find($tokenId);
 
@@ -70,4 +71,3 @@ class LoginController extends Controller
         ]);
     }
 }
-

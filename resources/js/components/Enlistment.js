@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DashboardNav from "./DashboardNav";
-import DashboardSide from "./DashboardSide";
+import Navbar from "./StudentNavbar"; // Import the Navbar component
 import enlistmentData from "./enlistmentData"; // Import the enlistment data
 
 const EnlistmentForm = ({ user }) => {
@@ -57,20 +56,18 @@ const EnlistmentForm = ({ user }) => {
     };
 
     return (
-        <div className="d-flex" style={{ height: "100vh" }}>
-            <div style={{ width: "250px" }}>
-                <DashboardSide />
-            </div>
-            <div className="flex-grow-1 d-flex flex-column ">
-                <DashboardNav user={user} />
-                <div className="form container column p-4">
+        <div className="d-flex flex-column" style={{ height: "100vh" }}>
+            <Navbar user={user} />{" "}
+            {/* Replace DashboardNav and DashboardSide with Navbar */}
+            <div className="flex-grow-1 d-flex justify-content-center align-items-center">
+                <div className="container p-4">
                     <div className="enlistment">
-                        <div className="flex-grow-1 ">
-                            <div className="container card shadow card-margin"> 
+                        <div className="flex-grow-1">
+                            <div className="container card shadow card-margin">
                                 <h5 className="card-title h2 mb-4 mt-4 text-center">
                                     Enlistment Form
                                 </h5>
-                                <form  onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
                                         <label
                                             htmlFor="idNumber"
@@ -354,9 +351,14 @@ const EnlistmentForm = ({ user }) => {
                                             onChange={handleCourseChange}
                                             required
                                         >
-                                            <option value="">Select Course</option>
+                                            <option value="">
+                                                Select Course
+                                            </option>
                                             {courses.map((course) => (
-                                                <option key={course.name} value={course.name}>
+                                                <option
+                                                    key={course.name}
+                                                    value={course.name}
+                                                >
                                                     {course.name}
                                                 </option>
                                             ))}
@@ -374,19 +376,29 @@ const EnlistmentForm = ({ user }) => {
                                             className="form-control"
                                             id="major"
                                             value={major}
-                                            onChange={(e) => setMajor(e.target.value)}
+                                            onChange={(e) =>
+                                                setMajor(e.target.value)
+                                            }
                                             required
                                         >
-                                            <option value="">Select Major</option>
+                                            <option value="">
+                                                Select Major
+                                            </option>
                                             {majors.map((major) => (
-                                                <option key={major} value={major}>
+                                                <option
+                                                    key={major}
+                                                    value={major}
+                                                >
                                                     {major}
                                                 </option>
                                             ))}
                                         </select>
                                     </div>
 
-                                    <button type="submit" className="btn btn-primary mt-4 mb-4">
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary mt-3"
+                                    >
                                         Submit
                                     </button>
                                 </form>
@@ -397,6 +409,13 @@ const EnlistmentForm = ({ user }) => {
             </div>
         </div>
     );
+};
+
+const checkAccountAge = (accountCreatedDate) => {
+    const today = new Date();
+    const createdDate = new Date(accountCreatedDate);
+    const ageInDays = Math.floor((today - createdDate) / (1000 * 60 * 60 * 24));
+    return ageInDays < 30 ? "new" : "existing";
 };
 
 export default EnlistmentForm;

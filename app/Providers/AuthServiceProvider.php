@@ -24,17 +24,19 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        // Define the 'admin' gate using numeric role
         Gate::define('admin', function ($user) {
-            return $user->role === 'admin'; // Ensure user has an admin role
+            return $user->role === 1; // Ensure user has an admin role (1)
         });
+
         // Define abilities
         Gate::define('view-dashboard', function ($user) {
-            return in_array($user->role, ['admin', 'user']);
+            return in_array($user->role, [0]); // Allow both admin (1) and user (0) to view dashboard
         });
 
         Gate::define('manage-users', function ($user) {
-            return $user->role === 'admin';
+            return $user->role === 1; // Only admin (1) can manage users
         });
     }
-    
 }

@@ -1,32 +1,41 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
-import axios from "axios"; // Make sure to import axios
+import axios from "axios"; // Ensure axios is imported
 
 export default function DashboardNav() {
     const navigate = useNavigate();
-    const { user, logout } = useUser();
+    const { user, setUser } = useUser();
 
     const handleLogout = async () => {
         try {
-            // Make an API call to logout
+            // Get CSRF token
+            await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
+
+            // Make an API call to logout with the token in the header
+            const token = localStorage.getItem("token");
             await axios.post("http://127.0.0.1:8000/api/logout", {}, {
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                    Authorization: `Bearer ${token}`, // Include the token
                 }
             });
-            // Call the logout function from context to clear user data and token
-            logout();
+
+            // Clear user data and token
+            setUser(null);
+            localStorage.removeItem("token");
+
             // Redirect to the login page
             navigate("/login");
         } catch (error) {
             console.error("Logout error:", error);
+            // Optionally, display an error message to the user
+            alert("Logout failed. Please try again.");
         }
     };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow">
-            <div className="container-fluid ">
+            <div className="container-fluid">
                 {/* Toggler button for mobile view */}
                 <button
                     className="navbar-toggler mb-3 ms-auto"
@@ -51,7 +60,7 @@ export default function DashboardNav() {
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                             >
-                                <span className="name text-nowrap me-2">{user ? user.name : "Guest"}</span>
+                                <span className="name text-nowrap me-2">{user ? user.name : "Admin"}</span>
                                 <img
                                     src={user?.profilePicture || "/profile.jpg"}
                                     alt="Profile"

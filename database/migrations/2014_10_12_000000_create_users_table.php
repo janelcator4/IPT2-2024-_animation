@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
             $table->string('name'); // User's name
             $table->string('email')->unique(); // Unique email address
             $table->string('password'); // User's hashed password
-            $table->string('role')->default('user'); // User role, default is 'user'
+            $table->tinyInteger('role')->default(0); // User role, 0 for user, 1 for admin
             $table->timestamps(); // Created at and updated at timestamps
         });
     }

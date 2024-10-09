@@ -9,18 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
-
-namespace App\Http\Controllers\Auth;
-
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class RegisterController extends Controller
 {
@@ -49,29 +37,21 @@ class RegisterController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => 'user', // Set default role to 'user'
+                'role' => 0, // Set default role to 0 for 'user'
             ]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'User registration failed.'], 500);
+            \Log::error('User registration failed: ' . $e->getMessage()); // Log the error for debugging
+            return response()->json(['message' => 'User registration failed. Please try again.'], 500);
         }
 
         // Automatically log the user in by generating a token with abilities
         Auth::login($user); // Log the user in
 
         // Define abilities based on user role
-        $abilities = $user->role === 'admin' ? ['view-dashboard', 'manage-users'] : ['view-dashboard'];
+        $abilities = $user->role === 1 ? ['view-dashboard', 'manage-users'] : ['view-dashboard'];
 
         // Create the token with the defined abilities
         $token = $user->createToken($user->name . "'s Token", $abilities)->plainTextToken;
-
-        // Get the newly created token to update last_used_at
-        $tokenId = explode('|', $token)[0]; 
-        $personalToken = PersonalAccessToken::find($tokenId);
-
-        if ($personalToken) {
-            $personalToken->last_used_at = now(); // Set last used at to current time
-            $personalToken->save(); // Save the updated token
-        }
 
         // Format created_at and updated_at to desired format (12-hour time format with AM/PM)
         $formattedCreatedAt = Carbon::parse($user->created_at)->format('g:i A');
@@ -94,4 +74,3 @@ class RegisterController extends Controller
         ], 201);
     }
 }
-
