@@ -86,7 +86,7 @@ export default function StudentNavbar() {
             {/* Offcanvas Menu for smaller screens */}
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark d-lg-none">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to="/">
+                    <Link className="navbar-brand" to="/studentprofile">
                         FSUU
                     </Link>
                     <button

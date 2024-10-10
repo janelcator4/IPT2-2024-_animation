@@ -40,7 +40,7 @@ export default function DashboardSide() {
                         to="/userlist" 
                         style={{ justifyContent: 'start' }}
                     >
-                        <FontAwesomeIcon icon={faClipboardList} className="me-2" /> User List
+                        <FontAwesomeIcon icon={faClipboardList} className="me-2" /> Student List
                     </NavLink>
                 </li>
                 

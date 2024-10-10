@@ -80,7 +80,7 @@ const EnlistmentForm = ({ user }) => {
                                             className="form-control"
                                             id="idNumber"
                                             required
-                                            readOnly
+                                            
                                         />
                                     </div>
                                     <div className="mb-3">
@@ -95,7 +95,7 @@ const EnlistmentForm = ({ user }) => {
                                             className="form-control"
                                             id="fullName"
                                             required
-                                            readOnly
+                                            
                                         />
                                     </div>
                                     <div className="mb-3">

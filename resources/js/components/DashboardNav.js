@@ -34,7 +34,7 @@ export default function DashboardNav() {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow">
+        <nav className="navbar navbar-expand-lg navbar-light   bg-light sticky-top shadow">
             <div className="container-fluid">
                 {/* Toggler button for mobile view */}
                 <button

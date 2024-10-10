@@ -74,11 +74,13 @@ export default function UserList() {
             {/* Main Content Area */}
             <div className="flex-grow-1 d-flex flex-column">
                 {/* Navbar */}
-                <DashboardNav user={user} />
+                <div className="dashboard-header sticky-top">
+                    <DashboardNav user={user} />
+                </div>
 
                 {/* Content Area */}
                 <div className="container p-4 flex-grow-1">
-                    <h1 className="text-center">User List</h1> 
+                    <h1 className="text-center">Student List</h1> 
 
                     {/* Loading or Error State */}
                     {loading && <p className="text-center">Loading users...</p>}
@@ -90,14 +92,14 @@ export default function UserList() {
                     )}
                     {users.length > 0 && (
                         <div className="mt-4">
-                            <h3 className="text-muted">All Users:</h3>
+                            <h3 className="text-muted">All Student:</h3>
                             <ul className="list-group shadow">
                                 {users.map((user) => (
                                     <li key={user.id} className="list-group-item">
                                         <strong>ID:</strong> {user.id} <br />
                                         <strong>Name:</strong> {user.name} <br />
                                         <strong>Email:</strong> {user.email} <br />
-                                        <strong>Role:</strong> {user.role} <br />
+                                        <strong>Role:</strong> {user.role === 1 ? "Admin" : "Student"} <br />
                                         <strong>Account Created:</strong>{" "}
                                         {new Date(user.created_at).toLocaleDateString()} <br />
                                         <strong>Last Updated:</strong>{" "}
