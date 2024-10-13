@@ -5,8 +5,8 @@ html, body {
 .hero {
     background-color: #e5e5f7;
     opacity: 1;
-    background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
-    background-size: 10px 10px;
+    background-image: radial-gradient(#444cf7 0.9px, #e5e5f7 0.9px);
+    background-size: 18px 18px;
     
 }
 .name{
