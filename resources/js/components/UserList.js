@@ -11,22 +11,22 @@ export default function UserList() {
 
     // Fetch all users from the database
     useEffect(() => {
-        let isMounted = true; // Variable to check if component is mounted
+        let isMounted = true; 
 
         const fetchUsers = async () => {
             try {
-                // First, get the CSRF token (if necessary)
+                
                 await fetch("http://localhost:8000/sanctum/csrf-cookie", {
                     method: 'GET',
-                    credentials: 'include', // Required to include cookies
+                    credentials: 'include', 
                 });
 
                 const response = await fetch("http://localhost:8000/api/users", {
                     method: 'GET',
-                    credentials: 'include', // Include credentials for authentication
+                    credentials: 'include', 
                     headers: {
-                        'Accept': 'application/json', // Set Accept header
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Add Bearer token for authentication
+                        'Accept': 'application/json', 
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`, 
                     },
                 });
     
@@ -40,19 +40,19 @@ export default function UserList() {
     
                 const result = await response.json();
     
-                // Check for 'success' flag
+                
                 if (result.success && isMounted) {
-                    setUsers(result.data); // Set users if the response is successful
+                    setUsers(result.data); 
                 } else if (isMounted) {
                     throw new Error("Invalid response from server");
                 }
             } catch (err) {
                 if (isMounted) {
-                    setError(err.message); // Set error state
+                    setError(err.message); 
                 }
             } finally {
                 if (isMounted) {
-                    setLoading(false); // Set loading to false
+                    setLoading(false); 
                 }
             }
         };
@@ -60,7 +60,7 @@ export default function UserList() {
         fetchUsers();
 
         return () => {
-            isMounted = false; // Cleanup function to mark the component as unmounted
+            isMounted = false; 
         };
     }, []);
 

@@ -32,7 +32,7 @@ export default function AdminDashboard() {
         fetchUser();
 
         return () => {
-            isMounted = false; // Cleanup on unmount
+            isMounted = false; 
         };
     }, [navigate]);
 

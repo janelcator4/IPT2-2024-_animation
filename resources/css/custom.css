@@ -3,50 +3,31 @@ html, body {
 }
 
 .hero {
-    background: url('/fsuu2.png') no-repeat center center; /* Correct path to the image */
-    background-size: cover;
-    height: 80vh; /* Adjust the height as needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    text-align: center;
+    background-color: #e5e5f7;
+    opacity: 1;
+    background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
+    background-size: 10px 10px;
+    
 }
-
-.hero-content {
-    z-index: 1; /* Ensure content is above the background */
-}
-
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Optional: Dark overlay for better text visibility */
-    z-index: 0; /* Overlay should be below the content */
-}
-
 .name{
     color: #000000;
 }
 
 footer {
-    margin-top: auto; /* Push footer to the bottom */
+    margin-top: auto; 
 }
 
 .navbar-nav .nav-item .btn {
-    min-width: 100px; /* Set a minimum width for buttons */
-    padding: 0.5rem 1rem; /* Adjust padding if needed */
+    min-width: 100px; 
+    padding: 0.5rem 1rem; 
 }
 
 .navbar-nav .nav-link {
-    padding: 0.5rem 1rem; /* Adjust padding for better spacing */
+    padding: 0.5rem 1rem; 
 }
 
 .btn {
-    min-width: 80px; /* Ensure buttons have a minimum width */
+    min-width: 80px; 
 }
 
 .navbar {
@@ -65,33 +46,32 @@ footer {
 }
 
 .nav-link:hover {
-    color: #ffc107; /* Change color on hover */
+    color: #ffc107; 
 }
 .nav-item{
     
-    padding-right: .5rem; /* Adjust as needed */
+    padding-right: .5rem; 
 }
 .side{
     padding-left: 1rem;
-    padding-right: 1rem; /* Adjust as needed */
+    padding-right: 1rem;
 }
 
-/* Logout button styling */
-/* Logout button styling */
+
 .logout-button {
-    background: transparent; /* Keep the default background transparent */
-    border: none; /* Remove the border */
-    color: #000000; /* Default text color */
-    padding: 0.5rem; /* Add vertical padding */
-    width: calc(100% - 20px); /* Set width to 100% minus margins */
-    margin: 0 10px; /* Add horizontal margins */
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
-    border-radius: 0.25rem; /* Add rounded corners */
+    background: transparent; 
+    border: none; 
+    color: #000000; 
+    padding: 0.5rem; 
+    width: calc(100% - 20px); 
+    margin: 0 10px; 
+    transition: background-color 0.3s ease; 
+    border-radius: 0.25rem;
 }
 
 .logout-button:hover {
     background-color: rgb(99, 99, 99); 
-    cursor: pointer; /* Change cursor to pointer */
+    cursor: pointer; 
     color: white;
 }
 .input-group {
@@ -99,9 +79,9 @@ footer {
 }
 
 .input-group .input-group-text {
-    background: transparent; /* Makes the icon background transparent */
-    border: none; /* Removes the border of the icon */
-    padding: 0; /* Removes padding for a tighter fit */
+    background: transparent; 
+    border: none; 
+    padding: 0; 
 }
 
 .dashboard {
@@ -110,18 +90,18 @@ footer {
 }
 
 .dashboard-sidebar {
-    width: 250px; /* Fixed width for the sidebar */
+    width: 250px; 
 }
 
 .dashboard-content {
-    flex-grow: 1; /* Allow the content to take remaining space */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
 
-/* Optional styling for the navbar */
+
 .navbar {
-    z-index: 10; /* Ensure the navbar is on top */
+    z-index: 10; 
 }
 
 

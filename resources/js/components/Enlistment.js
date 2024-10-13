@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./StudentNavbar"; // Import the Navbar component
-import enlistmentData from "./enlistmentData"; // Import the enlistment data
+import Navbar from "./StudentNavbar"; 
+import enlistmentData from "./enlistmentData"; 
 
 const EnlistmentForm = ({ user }) => {
     const [department, setDepartment] = useState("");

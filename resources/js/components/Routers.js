@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "./AdminDashboard"; 
 import Enlistment from "./Enlistment"; 
 import UserList from "./UserList"; 
-import StudentProfile from "./StudentProfile"; // Import the StudentProfile component
+import StudentProfile from "./StudentProfile"; 
 import { UserProvider } from "./UserContext";
 
 export default function Routers() {
@@ -42,7 +42,7 @@ export default function Routers() {
                         } 
                     />
 
-                    {/* Student Profile Route */}
+                    
                     <Route 
                         path="/studentprofile" 
                         element={

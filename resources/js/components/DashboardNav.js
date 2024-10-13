@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext";
-import axios from "axios"; // Ensure axios is imported
+import axios from "axios"; 
 
 export default function DashboardNav() {
     const navigate = useNavigate();
@@ -9,26 +9,26 @@ export default function DashboardNav() {
 
     const handleLogout = async () => {
         try {
-            // Get CSRF token
+            
             await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
 
-            // Make an API call to logout with the token in the header
+            
             const token = localStorage.getItem("token");
             await axios.post("http://127.0.0.1:8000/api/logout", {}, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Include the token
+                    Authorization: `Bearer ${token}`, 
                 }
             });
 
-            // Clear user data and token
+            
             setUser(null);
             localStorage.removeItem("token");
 
-            // Redirect to the login page
+            
             navigate("/login");
         } catch (error) {
             console.error("Logout error:", error);
-            // Optionally, display an error message to the user
+            
             alert("Logout failed. Please try again.");
         }
     };

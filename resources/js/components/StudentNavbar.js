@@ -1,45 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "./UserContext"; // Import the UserContext
-import axios from "axios"; // Ensure axios is imported
+import { useUser } from "./UserContext"; 
+import axios from "axios"; 
 
 export default function StudentNavbar() {
-    const { user, setUser } = useUser(); // Use the user context
-    const navigate = useNavigate(); // Hook for navigation
-    const isMounted = useRef(true); // Track if the component is mounted
-    const [errorMessage, setErrorMessage] = useState(""); // State for error messages
+    const { user, setUser } = useUser(); 
+    const navigate = useNavigate(); 
+    const isMounted = useRef(true); 
+    const [errorMessage, setErrorMessage] = useState(""); 
 
     useEffect(() => {
         return () => {
-            isMounted.current = false; // Set to false when the component unmounts
+            isMounted.current = false; 
         };
     }, []);
 
     const handleLogout = async () => {
-        setErrorMessage(""); // Clear previous error messages
+        setErrorMessage(""); 
         try {
-            // Get CSRF token
+            
             await axios.get("http://127.0.0.1:8000/sanctum/csrf-cookie");
 
-            // Make an API call to logout with the token in the header
+            
             const token = localStorage.getItem("token");
             await axios.post("http://127.0.0.1:8000/api/logout", {}, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Include the token
+                    Authorization: `Bearer ${token}`, 
                 },
             });
 
-            // Clear user data and token
+            
             setUser(null);
             localStorage.removeItem("token");
 
             if (isMounted.current) {
-                navigate("/"); // Redirect to login after logout if still mounted
+                navigate("/"); 
             }
         } catch (error) {
             if (isMounted.current) {
                 console.error("Logout failed:", error);
-                setErrorMessage("Logout failed. Please try again."); // Set error message
+                setErrorMessage("Logout failed. Please try again."); 
             }
         }
     };

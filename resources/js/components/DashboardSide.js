@@ -2,11 +2,11 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faClipboardList, faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, useLocation } from "react-router-dom";
-import { useUser } from "./UserContext"; // Import UserContext to access user info
+import { useUser } from "./UserContext"; 
 
 export default function DashboardSide() {
-    const { user } = useUser(); // Get user info from context
-    const location = useLocation(); // Get the current location
+    const { user } = useUser(); 
+    const location = useLocation(); 
 
     return (
         <div

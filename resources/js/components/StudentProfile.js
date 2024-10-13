@@ -1,12 +1,12 @@
 import React from "react";
 import StudentNavbar from "./StudentNavbar";
-import { useUser } from "./UserContext"; // Import the useUser hook
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Assuming Font Awesome is installed
+import { useUser } from "./UserContext"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faUser, faEnvelope, faIdBadge, faEdit, faCamera } from "@fortawesome/free-solid-svg-icons";
 
 export default function StudentProfile() {
-    const { user } = useUser() || {}; // Get user info from context
-    const { id, name, email } = user || {}; // Destructure user details
+    const { user } = useUser() || {}; 
+    const { id, name, email } = user || {}; 
 
     return (
         <div className="student-profile-container bg-light min-vh-100">
@@ -30,7 +30,7 @@ export default function StudentProfile() {
                             <div className="card border-0 shadow-lg rounded-lg overflow-hidden">
                                 <div className="card-body p-5">
                                     <div className="row align-items-center">
-                                        {/* Avatar Section with Upload */}
+                                        
                                         <div className="col-md-4 text-center mb-4 mb-md-0 position-relative">
                                             <div className="profile-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative" style={{ width: "150px", height: "150px" }}>
                                                 <span className="display-6">{name ? name.charAt(0) : "U"}</span>
@@ -69,14 +69,14 @@ export default function StudentProfile() {
                         </div>
                     </div>
 
-                    {/* Additional Information Section */}
+                    
                     <div className="row justify-content-center mt-5">
                         <div className="col-md-4">
                             <div className="card border-0 shadow-lg rounded-lg">
                                 <div className="card-body text-center">
                                     <h4 className="card-title">Courses Enrolled</h4>
                                     <p className="text-muted">No courses enrolled.</p>
-                                    {/* Add course listing dynamically here */}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default function StudentProfile() {
                                 <div className="card-body text-center">
                                     <h4 className="card-title">Achievements</h4>
                                     <p className="text-muted">No achievements yet.</p>
-                                    {/* Add achievements dynamically here */}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@ export default function StudentProfile() {
                 </div>
             </section>
 
-            {/* Activity Section */}
+            
             <section className="py-5 bg-light">
                 <div className="container">
                     <h2 className="text-center mb-5">Recent Activity</h2>
@@ -102,7 +102,7 @@ export default function StudentProfile() {
                             <div className="card border-0 shadow-lg">
                                 <div className="card-body">
                                     <h5 className="text-center">No recent activity found</h5>
-                                    {/* Optional: Implement a timeline or activity feed */}
+                                    
                                 </div>
                             </div>
                         </div>

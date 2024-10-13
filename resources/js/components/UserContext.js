@@ -29,17 +29,17 @@ export const UserProvider = ({ children }) => {
         }
     }, [user]);
 
-    // You can add a token/session validity check here
+    
     useEffect(() => {
         const checkSessionValidity = () => {
             const token = localStorage.getItem("token");
-            // You can make an API call or check token expiration logic here
+           
             if (!token) {
                 logout();
             }
         };
 
-        // Call the check when the component mounts
+        
         checkSessionValidity();
     }, []);
 
